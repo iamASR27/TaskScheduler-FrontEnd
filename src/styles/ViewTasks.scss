@@ -1,0 +1,37 @@
+.list-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    width: 50%;
+    font-size: small;
+}
+
+.list-meta {
+    padding-left: 0.5rem;
+}
+
+.list-actions {
+  display: flex;
+  gap: 8px;
+
+}
+  @media (max-width: 400px) {
+    .list-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 100%;
+        position: relative;
+
+        .list-meta {
+           position: relative;
+           right: 1rem;
+        }
+        
+    }
+
+  }
+  
