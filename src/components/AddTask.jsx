@@ -4,6 +4,7 @@ import { Form, Input, Button, DatePicker, Select } from "antd";
 import useFetchData from "../CustomHook/useFetchData";
 import "../styles/AddTask.scss";
 import { useLocation } from "react-router-dom";
+// import moment from "moment";
 
 const { Option } = Select;
 
@@ -17,9 +18,16 @@ const AddTask = ({setData}) => {
 
   useEffect(() => {
     const item = location.state?.item || [];
-    setItemData(item);
+    // const formattedDeadline = moment(item.deadline).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+    const formattedDeadline = new Date(item.deadline).toISOString();
+
+    console.log(formattedDeadline)
+    const updatedItem = { ...item, deadline: formattedDeadline };
+    setItemData([updatedItem]);
+    // console.log(item.deadline)
+    // console.log(typeof item.deadline)
     if (Object.keys(item).length > 0) {
-      form.setFieldsValue(item);
+      form.setFieldsValue(updatedItem);
     }
   }, [location.state?.item]);
 

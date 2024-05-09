@@ -101,7 +101,7 @@ const App = () => {
           >
              <Routes>
               <Route path="/" element={<AddTask setData={setData}/>} />
-              <Route path="/view-tasks" element={<ViewTasks data={data} loading={loading}/>} />
+              <Route path="/view-tasks" element={<ViewTasks data={data} loading={loading} setData={setData}/>} />
              
             </Routes>
           </div>

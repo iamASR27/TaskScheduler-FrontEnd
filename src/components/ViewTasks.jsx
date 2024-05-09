@@ -5,11 +5,14 @@ import VirtualList from "rc-virtual-list";
 import "../styles/ViewTasks.scss";
 import { useNavigate } from "react-router-dom";
 import moment from 'moment';
+import useFetchData from "../CustomHook/useFetchData";
 
 const ContainerHeight = 400;
 
-const ViewTasks = ({ data, loading }) => {
+const ViewTasks = ({ data, loading, setData }) => {
   const [buttonSize, setButtonSize] = useState("middle");
+
+  const { deleteTask } = useFetchData();
 
   const navigate = useNavigate();
 
@@ -17,12 +20,19 @@ const ViewTasks = ({ data, loading }) => {
     // console.log(item)
     // console.log(typeof item.deadline)
     // console.log(item.deadline);
-    const formattedDeadline = new Date(item.deadline);
-    console.log(typeof formattedDeadline)
+    // const formattedDeadline = new Date(item.deadline);
+    // console.log(typeof formattedDeadline)
 
-    const editedItem = { ...item, deadline: formattedDeadline };
-    navigate("/", { state: { item: editedItem } });
-    //navigate("/", { state: { item } });
+    // const editedItem = { ...item, deadline: formattedDeadline };
+    // navigate("/", { state: { item: editedItem } });
+    navigate("/", { state: { item } });
+  };
+
+  const handleDelete = (id) => {
+    deleteTask(id);
+    setData((prevTasks) =>
+      prevTasks.filter((task) => task.id !== id)
+    );
   };
 
   useEffect(() => {
@@ -81,7 +91,7 @@ const ViewTasks = ({ data, loading }) => {
                 >
                   Edit
                 </Button>
-                <Button danger size={buttonSize}>
+                <Button danger size={buttonSize} onClick={() => handleDelete(item.id)}>
                   Delete
                 </Button>
               </div>

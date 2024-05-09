@@ -66,23 +66,23 @@ function useFetchData() {
           }
     }
   
-    // const deleteExpense = async(id) => {
-    //   try {
-    //     const response = await fetch(`http://localhost:3000/api/delete-expense/${id}`,{
-    //       method: 'DELETE'
-    //     })
+    const deleteTask = async(id) => {
+      try {
+        const response = await fetch(`${url}/tasks/${id}.json`,{
+          method: 'DELETE'
+        })
   
-    //     if(!response.ok) {
-    //       throw new Error("Error deleting expense");
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
+        if(!response.ok) {
+          throw new Error("Error deleting expense");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
   
     const editTask = async(data, id) => {
        try {
-        const response = await fetch(`${url}/tasks.json/${id}`, {
+        const response = await fetch(`${url}/tasks.json/${id}.json`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -100,7 +100,7 @@ function useFetchData() {
       }
     }
   
-    return { postTask, getAllTasks, editTask, /*deleteTask*/};
+    return { postTask, getAllTasks, editTask, deleteTask};
   }
   
   export default useFetchData;
