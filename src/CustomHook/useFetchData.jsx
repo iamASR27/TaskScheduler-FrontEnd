@@ -82,7 +82,7 @@ function useFetchData() {
   
     const editTask = async(data, id) => {
        try {
-        const response = await fetch(`${url}/tasks.json/${id}.json`, {
+        const response = await fetch(`${url}/tasks/${id}.json`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
