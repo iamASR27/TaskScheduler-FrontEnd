@@ -78,7 +78,7 @@ function useFetchData() {
           throw new Error("Error adding expense");
         }
         const updateData = await response.json();
-        console.log(updateData)
+        // console.log(updateData)
         return updateData;
       } catch (error) {
         console.error(error);
