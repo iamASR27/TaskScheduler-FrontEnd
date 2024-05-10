@@ -1,80 +1,84 @@
 $gap: 2rem;
 
-.list-item-div {
+.filter-sort-container {
     display: flex;
-    min-width: 40%
+
+    @media (max-width: 440px){
+        flex-direction: column;
+    }
+}
+
+.list-item-div {
+  display: flex;
+  min-width: 40%;
 }
 
 .outer-list-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
-    min-width: 60%
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  min-width: 60%;
 }
 
 .inner-list-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: $gap;
-    width: 100%;
-    font-size: small;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $gap;
+  width: 100%;
+  font-size: small;
 }
 
 .list-meta {
-    padding-left: 0.5rem;
-    
-    // border: 1px solid black;
+  padding-left: 0.5rem;
+
+  // border: 1px solid black;
 }
 
 .list-actions {
   display: flex;
   gap: 8px;
-
 }
 
 @media (max-width: 680px) {
-    .list-item {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
+  .list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
-        .list-item-div {
-            display: flex;
-            margin-right: auto;
-            gap: $gap;
+    .list-item-div {
+      display: flex;
+      margin-right: auto;
+      gap: $gap;
 
-            .list-meta {
-                min-width: 100%;
-            }
-        }
-
-        .outer-list-container {
-            display: flex;
-
-            .list-details {
-                display: flex;
-                justify-content: space-between;
-                gap: $gap;
-                margin-right: 1rem;
-            }
-            
-            .list-actions {
-                display: flex;
-                justify-content: space-around;
-                margin-top: 1rem;
-
-            }
-        }
+      .list-meta {
+        min-width: 100%;
+      }
     }
 
+    .outer-list-container {
+      display: flex;
+
+      .list-details {
+        display: flex;
+        justify-content: space-between;
+        gap: $gap;
+        margin-right: 1rem;
+      }
+
+      .list-actions {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 1rem;
+      }
+    }
+  }
 }
 
-  @media (max-width: 540px) {
-    .outer-list-container {
-        display: flex;
-        flex-direction: column;
-    }
+@media (max-width: 540px) {
 
+  .outer-list-container {
+    display: flex;
+    flex-direction: column;
   }
-  
+}

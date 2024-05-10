@@ -108,13 +108,15 @@ const ViewTasks = ({ data, loading, setData }) => {
   }
 
   return (
-    <div>
+    <div className="view-tasks">
         <Input
         placeholder="Search by title or description"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         style={{ marginBottom: "1rem" }}
       />
+      <div className="filter-sort-container">
+        <div className="filter-container">
     <span>Filter:</span>{" "}
       <Select
         defaultValue="all"
@@ -128,6 +130,8 @@ const ViewTasks = ({ data, loading, setData }) => {
         <Option value="medium">Medium Priority</Option>
         <Option value="high">High Priority</Option>
       </Select>
+      </div>
+      <div className="sort-container">
       <span>Sort By:</span>{" "}
       <Select
           defaultValue="none"
@@ -138,6 +142,8 @@ const ViewTasks = ({ data, loading, setData }) => {
           <Option value="priority">Priority</Option>
           <Option value="deadline">Deadline</Option>
         </Select>
+        </div>
+        </div>
     <List>
       {sortedData.length > 0 ? (
         <VirtualList
