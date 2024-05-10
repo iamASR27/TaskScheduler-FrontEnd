@@ -43,6 +43,7 @@ const App = () => {
   const [data, setData] = useState([]);
   const [editState, setEditState] = useState({ status: false, editData: null });
   const [loading, setLoading] = useState(true);
+  const [collapsed, setCollapsed] = useState(true);
 
 
   const fetchTasks = async() => {
@@ -66,6 +67,7 @@ const App = () => {
     setSelectedKey(item.key);
     localStorage.setItem("initialKey", item.key)
     navigate(item.item.props.path);
+    // setCollapsed(true);
   };
 
 
@@ -79,8 +81,12 @@ const App = () => {
         }}
         onCollapse={(collapsed, type) => {
           console.log(collapsed, type);
+          setCollapsed(collapsed);
         }}
         className='sider'
+        collapsible 
+        collapsed={collapsed} 
+         
       >
         <div className="demo-logo-vertical" />
         <Menu theme="dark" mode="inline" /*defaultSelectedKeys={['1']}*/ selectedKeys={[selectedKey]} items={items} onClick={handleClick}/>
@@ -88,7 +94,7 @@ const App = () => {
       <Layout>
         <Header
           className="task-scheduler-heading"
-        ><h1>Task Scheduler</h1></Header>
+        ><h2>Task Scheduler</h2></Header>
         <Content
           style={{
             margin: '24px 16px 0',
