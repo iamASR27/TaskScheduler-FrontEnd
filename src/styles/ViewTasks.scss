@@ -23,6 +23,8 @@ $gap: 2rem;
 
 .list-meta {
     padding-left: 0.5rem;
+    
+    border: 1px solid black;
 }
 
 .list-actions {
@@ -41,6 +43,10 @@ $gap: 2rem;
             display: flex;
             margin-right: auto;
             gap: $gap;
+
+            .list-meta {
+                min-width: 100%;
+            }
         }
 
         .outer-list-container {
