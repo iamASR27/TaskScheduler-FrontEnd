@@ -41,6 +41,7 @@ const App = () => {
   const {getAllTasks} = useFetchData();
   
   const [data, setData] = useState([]);
+  const [editState, setEditState] = useState({ status: false, editData: null });
   const [loading, setLoading] = useState(true);
 
 
@@ -50,6 +51,8 @@ const App = () => {
   }
 
   useEffect(() => {
+    // const initKey = localStorage.getItem('initialKey');
+    // setSelectedKey(initKey);
     if(loading) {
       fetchTasks();
       setLoading(false);
@@ -101,8 +104,8 @@ const App = () => {
           >
              <Suspense fallback={<Spin size="large" />}>
              <Routes>
-              <Route path="/" element={<AddTask setData={setData}/>} />
-              <Route path="/view-tasks" element={<ViewTasks data={data} loading={loading} setData={setData}/>} />
+              <Route path="/" element={<AddTask setData={setData} editState={editState} setEditState={setEditState}/>} />
+              <Route path="/view-tasks" element={<ViewTasks data={data} loading={loading} setData={setData} setSelectedKey={setSelectedKey} setEditState={setEditState}/>} />
               <Route path='/task-reminders' element={<TaskReminder data={data}/>}/>
             </Routes>
             </Suspense>

@@ -10,7 +10,7 @@ import "../styles/ViewTasks.scss";
 const { Option } = Select;
 const ContainerHeight = 400;
 
-const ViewTasks = ({ data, loading, setData }) => {
+const ViewTasks = ({ data, loading, setData, setSelectedKey , setEditState }) => {
   const [buttonSize, setButtonSize] = useState("middle");
   const [filter, setFilter] = useState("all");
   const [sortCriteria, setSortCriteria] = useState("none");
@@ -21,7 +21,11 @@ const ViewTasks = ({ data, loading, setData }) => {
   const navigate = useNavigate();
 
   const handleEditClick = (item) => {
+    setEditState({ status: true, editData: item });
+    // setData((prevTasks) => prevTasks.filter((task) => task.id !== item.id));
     navigate("/", { state: { item } });
+    localStorage.setItem("initialKey", '1');
+    setSelectedKey('1');
   };
 
   const handleDelete = (id) => {
@@ -139,8 +143,8 @@ const ViewTasks = ({ data, loading, setData }) => {
           onChange={(value) => setSortCriteria(value)}
         >
           <Option value="none">None</Option>
-          <Option value="priority">Priority</Option>
           <Option value="deadline">Deadline</Option>
+          <Option value="priority">Priority</Option>
         </Select>
         </div>
         </div>

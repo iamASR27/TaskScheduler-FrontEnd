@@ -79,7 +79,7 @@ function useFetchData() {
         }
         const updateData = await response.json();
         // console.log(updateData)
-        return updateData;
+        return {...updateData, id: id};
       } catch (error) {
         console.error(error);
       }

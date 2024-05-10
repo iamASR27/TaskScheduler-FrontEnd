@@ -8,7 +8,7 @@ import "../styles/AddTask.scss";
 
 const { Option } = Select;
 
-const AddTask = ({ setData }) => {
+const AddTask = ({ setData, editState, setEditState }) => {
   const [form] = Form.useForm();
   const [itemData, setItemData] = useState({});
 
@@ -24,7 +24,7 @@ const AddTask = ({ setData }) => {
       //   const formattedDeadline = new Date(item.deadline).toISOString();
       const formattedDeadline = dayjs(item.deadline);
 
-      console.log(formattedDeadline);
+      // console.log(formattedDeadline);
       const updatedItem = { ...item, deadline: formattedDeadline };
       setItemData(updatedItem);
 
@@ -36,9 +36,9 @@ const AddTask = ({ setData }) => {
     // console.log("Received values:", values);
     // console.log(typeof values.deadline);
 
-    if (itemData.length > 0) {
-      const updateTask = await editTask(itemData, itemData.id);
-
+    if (editState.status) {
+      const updateTask = await editTask(values, editState.editData.id);
+      console.log(updateTask)
       setData((prevTask) => {
         const updatedTask = [...prevTask];
         const updateIndex = prevTask.findIndex(
@@ -50,6 +50,8 @@ const AddTask = ({ setData }) => {
         }
         return updatedTask;
       });
+
+      setEditState({ status: false, editData: null });
 
       navigate("/");
     } else {
@@ -103,7 +105,7 @@ const AddTask = ({ setData }) => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            {Object.keys(itemData).length > 0 ? "Save Task" : "Add Task"}
+            {editState.status ? "Save Task" : "Add Task"}
           </Button>
         </Form.Item>
       </Form>
