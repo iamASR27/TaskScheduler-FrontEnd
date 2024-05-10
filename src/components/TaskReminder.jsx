@@ -24,9 +24,13 @@ const TaskReminder = ({ data }) => {
       }
     });
 
+    upcoming.sort((a, b) => a.daysRemaining - b.daysRemaining);
+
     setUpcomingTasks(upcoming);
     setOverdueTasks(overdue);
   };
+
+   
 
   useEffect(() => {
     filterTasks();
