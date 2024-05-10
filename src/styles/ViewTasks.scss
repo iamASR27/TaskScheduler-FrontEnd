@@ -1,9 +1,23 @@
-.list-container {
+$gap: 2rem;
+
+.list-item-div {
+    display: flex;
+    min-width: 40%
+}
+
+.outer-list-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    min-width: 60%
+}
+
+.inner-list-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 2rem;
-    width: 50%;
+    gap: $gap;
+    width: 100%;
     font-size: small;
 }
 
@@ -16,21 +30,44 @@
   gap: 8px;
 
 }
-  @media (max-width: 400px) {
+
+@media (max-width: 680px) {
     .list-item {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5rem;
-        min-width: 100%;
-        position: relative;
+        gap: 1rem;
 
-        .list-meta {
-           position: relative;
-           right: 1rem;
+        .list-item-div {
+            display: flex;
+            margin-right: auto;
+            gap: $gap;
         }
-        
+
+        .outer-list-container {
+            display: flex;
+
+            .list-details {
+                display: flex;
+                justify-content: space-between;
+                gap: $gap;
+                margin-right: 1rem;
+            }
+            
+            .list-actions {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 1rem;
+
+            }
+        }
+    }
+
+}
+
+  @media (max-width: 540px) {
+    .outer-list-container {
+        display: flex;
+        flex-direction: column;
     }
 
   }

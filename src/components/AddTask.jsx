@@ -3,94 +3,64 @@ import { useEffect, useState } from "react";
 import { Form, Input, Button, DatePicker, Select } from "antd";
 import useFetchData from "../CustomHook/useFetchData";
 import "../styles/AddTask.scss";
-import { useLocation } from "react-router-dom";
-// import moment from "moment";
+import { useLocation, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const { Option } = Select;
 
-const AddTask = ({setData}) => {
+const AddTask = ({ setData }) => {
   const [form] = Form.useForm();
-  const [itemData, setItemData] = useState([]);
+  const [itemData, setItemData] = useState({});
 
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const {postTask, editTask} = useFetchData();
+  const { postTask, editTask } = useFetchData();
 
   useEffect(() => {
-    const item = location.state?.item || [];
-    // const formattedDeadline = moment(item.deadline).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-    const formattedDeadline = new Date(item.deadline).toISOString();
+    if (location.state?.item) {
+      const item = location.state?.item;
+      // const formattedDeadline = moment(item.deadline).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
+      //   const formattedDeadline = new Date(item.deadline).toISOString();
+      const formattedDeadline = dayjs(item.deadline);
 
-    console.log(formattedDeadline)
-    const updatedItem = { ...item, deadline: formattedDeadline };
-    setItemData([updatedItem]);
-    // console.log(item.deadline)
-    // console.log(typeof item.deadline)
-    if (Object.keys(item).length > 0) {
+      console.log(formattedDeadline);
+      const updatedItem = { ...item, deadline: formattedDeadline };
+      setItemData(updatedItem);
+
       form.setFieldsValue(updatedItem);
     }
-  }, [location.state?.item]);
-
-// useEffect(() => {
-//     const item = location.state?.item || [];
-//     setItemData(item);
-//     if (Object.keys(item).length > 0) {
-//       // Check if deadline is a valid date object (optional)
-//       if (item.deadline instanceof Date && !isNaN(item.deadline.getTime())) {
-//         form.setFieldsValue(item);
-//       } else {
-//         console.error("Invalid deadline format in edited task");
-//       }
-//     }
-//   }, [location.state?.item]);
+  }, [location.state?.item, form]);
 
   const onFinish = async (values) => {
-    console.log("Received values:", values);
-    console.log(typeof values.deadline);
+    // console.log("Received values:", values);
+    // console.log(typeof values.deadline);
 
-    if(itemData.length > 0){
-        const addTask = await postTask(values);
-        // console.log(addTask)
-        setData((prevTask) => [{id: addTask.name, ...values }, ...prevTask]);
-        // console.log({id: addTask.name, ...values })
+    if (itemData.length > 0) {
+      const updateTask = await editTask(itemData, itemData.id);
+
+      setData((prevTask) => {
+        const updatedTask = [...prevTask];
+        const updateIndex = prevTask.findIndex(
+          (item) => item.id === updateTask.id
+        );
+
+        if (updateIndex !== -1) {
+          updatedTask[updateIndex] = updateTask;
+        }
+        return updatedTask;
+      });
+
+      navigate("/");
     } else {
-        const updateTask = await editTask(itemData, itemData.id);
+      const addTask = await postTask(values);
+    //   console.log(addTask)
+      setData((prevTask) => [{ id: addTask.name, ...values, completed: false }, ...prevTask]);
+      // console.log({id: addTask.name, ...values })
+      //   form.resetFields();
 
-        setData((prevTask) => {
-            const updatedTask = [...prevTask];
-            const updateIndex = prevTask.findIndex((item) => item.id === updateTask.id);
-
-            if (updateIndex !== -1) {
-                updatedTask[updateIndex] = updateTask;
-              }
-              return updatedTask;
-        })
-
-        form.resetFields();
-
-        setItemData([]);
-
+      //   setItemData({});
     }
-
-
-
-    // try {
-    //   const res = await fetch(
-    //     "https://task-scheduler-8b672-default-rtdb.firebaseio.com/tasks.json",
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringify(values),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   if (!res.ok) {
-    //     throw new Error("Error adding task to server");
-    //   }
-    // } catch (error) {
-    //   console.error("Error: ", error);
-    // }
 
     form.resetFields();
   };
@@ -133,7 +103,7 @@ const AddTask = ({setData}) => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-          {Object.keys(itemData).length > 0 ? "Save Task" : "Add Task"}
+            {Object.keys(itemData).length > 0 ? "Save Task" : "Add Task"}
           </Button>
         </Form.Item>
       </Form>
@@ -141,4 +111,4 @@ const AddTask = ({setData}) => {
   );
 };
 
-export default  AddTask;
+export default AddTask;

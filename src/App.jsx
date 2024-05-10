@@ -5,6 +5,7 @@ import AddTask from './components/AddTask';
 import ViewTasks from './components/ViewTasks';
 import useFetchData from './CustomHook/useFetchData';
 import './App.scss';
+import TaskReminder from './components/TaskReminder';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -27,7 +28,8 @@ const items = [
 ];
 
 const App = () => {
-  const [selectedKey, setSelectedKey] = useState('1');
+  const initialSelectedKey = localStorage.getItem('initialKey');
+  const [selectedKey, setSelectedKey] = useState(initialSelectedKey ||'1');
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -55,14 +57,8 @@ const App = () => {
 
   const handleClick = (item) => {
     setSelectedKey(item.key);
+    localStorage.setItem("initialKey", item.key)
     navigate(item.item.props.path);
-    // console.log(item.item.props.path)
-    // console.log('navigate', item.item.props.path)
-    // if (item.key === '1') {
-    //   navigate('/'); 
-    // } else {
-    //   navigate(`/${item.key.toLowerCase()}`); 
-    // }
   };
 
 
@@ -102,7 +98,7 @@ const App = () => {
              <Routes>
               <Route path="/" element={<AddTask setData={setData}/>} />
               <Route path="/view-tasks" element={<ViewTasks data={data} loading={loading} setData={setData}/>} />
-             
+              <Route path='/task-reminders' element={<TaskReminder data={data}/>}/>
             </Routes>
           </div>
         </Content>
@@ -111,7 +107,7 @@ const App = () => {
             textAlign: 'center',
           }}
         >
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          Task Scheduler Created by Amardeep
         </Footer>
       </Layout>
     </Layout>

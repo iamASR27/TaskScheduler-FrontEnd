@@ -2,6 +2,7 @@ function useFetchData() {
     let url = "https://task-scheduler-8b672-default-rtdb.firebaseio.com";
     const postTask = async (data) => {
       // console.log(data)
+      data.completed = false;
       try {
         const res = await fetch(
           `${url}/tasks.json`,
@@ -22,23 +23,7 @@ function useFetchData() {
       } catch (error) {
         console.error("Error: ", error);
       }
-    //   try {
-    //     const response = await fetch("http://localhost:3000/api/add-expense", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(data),
-    //     });
-    //     if (!response.ok) {
-    //       throw new Error("Error adding expense");
-    //     }
-    //     const postData = await response.json();
-    //     console.log(postData)
-    //     return postData;
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
+   
     };
   
     const getAllTasks = async () => {
