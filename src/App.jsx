@@ -4,8 +4,8 @@ import {Routes, Route, useNavigate} from 'react-router-dom';
 import AddTask from './components/AddTask';
 import ViewTasks from './components/ViewTasks';
 import useFetchData from './CustomHook/useFetchData';
-import './App.scss';
 import TaskReminder from './components/TaskReminder';
+import './App.scss';
 
 const { Header, Content, Footer, Sider } = Layout;
 
