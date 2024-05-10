@@ -1,13 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Layout, Menu, theme } from 'antd';
+import { useState, useEffect, lazy, Suspense } from 'react';
+import { Layout, Menu, theme, Spin } from 'antd';
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import AddTask from './components/AddTask';
-import ViewTasks from './components/ViewTasks';
+// import AddTask from './components/AddTask';
+// import ViewTasks from './components/ViewTasks';
 import useFetchData from './CustomHook/useFetchData';
-import TaskReminder from './components/TaskReminder';
+// import TaskReminder from './components/TaskReminder';
 import './App.scss';
 
 const { Header, Content, Footer, Sider } = Layout;
+
+const AddTask = lazy(() => import('./components/AddTask'));
+const ViewTasks = lazy(() => import('./components/ViewTasks'));
+const TaskReminder = lazy(() => import('./components/TaskReminder'));
 
 const items = [
   {
@@ -95,11 +99,13 @@ const App = () => {
               borderRadius: borderRadiusLG,
             }}
           >
+             <Suspense fallback={<Spin size="large" />}>
              <Routes>
               <Route path="/" element={<AddTask setData={setData}/>} />
               <Route path="/view-tasks" element={<ViewTasks data={data} loading={loading} setData={setData}/>} />
               <Route path='/task-reminders' element={<TaskReminder data={data}/>}/>
             </Routes>
+            </Suspense>
           </div>
         </Content>
         <Footer
