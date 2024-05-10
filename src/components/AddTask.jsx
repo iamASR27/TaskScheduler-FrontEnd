@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Form, Input, Button, DatePicker, Select } from "antd";
 import useFetchData from "../CustomHook/useFetchData";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ const { Option } = Select;
 
 const AddTask = ({ setData, editState, setEditState }) => {
   const [form] = Form.useForm();
-  const [itemData, setItemData] = useState({});
+  // const [itemData, setItemData] = useState({});
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const AddTask = ({ setData, editState, setEditState }) => {
 
       // console.log(formattedDeadline);
       const updatedItem = { ...item, deadline: formattedDeadline };
-      setItemData(updatedItem);
+      // setItemData(updatedItem);
 
       form.setFieldsValue(updatedItem);
     }
